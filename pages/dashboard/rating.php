@@ -1,3 +1,20 @@
+<?php
+include './../../includes/function.php';
+
+// Pagination Set up
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$page = max(1, $page);
+$perPage = 5;
+$start = ($page - 1) * $perPage;
+
+// Ambil data sesuai halaman
+$ratings = query("SELECT * FROM tb_penilaian ORDER BY created_at DESC LIMIT $start, $perPage");
+
+// Hitung total data
+$total = count(query("SELECT * FROM tb_penilaian"));
+$totalPages = ceil($total / $perPage);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +29,7 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <title>Tugaskan Penjoki | Jokiin</title>
+    <title>Penilaian | Jokiin</title>
 </head>
 
 <body>
@@ -28,7 +45,7 @@
         </div>
         <div class="box">
             <i class="ri-group-line" onclick="location.href='user_management.php'"></i>
-            <a href="./user_management.php">Manajemen Pengguna</a>
+            <a href="#">Manajemen Pengguna</a>
         </div>
         <div class="box">
             <i class="ri-message-2-line" onclick="location.href='mail_management.php'"></i>
@@ -42,9 +59,9 @@
             <i class="ri-bank-card-line" onclick="location.href='payment.php'"></i>
             <a href="./payment.php">Pembayaran</a>
         </div>
-        <div class="box">
+        <div class="box active">
             <i class="ri-star-half-line" onclick="location.href='rating.php'"></i>
-            <a href="./rating.php">Penilaian</a>
+            <a href="#">Penilaian</a>
         </div>
         <div class="box">
             <i class="ri-home-5-line" onclick="location.href='./../home.html'"></i>
@@ -64,7 +81,7 @@
             <div class="container">
                 <div class="box-header">
                     <div class="box">
-                        <h1>Tugaskan Penjoki</h1>
+                        <h1>Penilaian Pengguna</h1>
                     </div>
                     <div class="box">
                         <form action="">
@@ -78,52 +95,74 @@
         </section>
         <!-- Header End -->
 
-        <!-- Form Content Start -->
-        <section class="form-content shrink">
+        <!-- Content Start -->
+        <section class="content shrink">
             <div class="container">
                 <div class="breadcrumb">
                     <a href="./dashboard.html">Dashboard</a>
-                    <a href="./tasks_list.php">Daftar Tugas</a>
-                    <span>Tugaskan Penjoki</span>
+                    <span>Penilaian Pengguna</span>
                 </div>
 
-                <div class="box-form-content">
-                    <form action="">
-                        <div class="input-container">
-                            <label for="nama_client">Nama Client</label>
-                            <input type="text" name="nama_client" id="nama_client" value="Robert" disabled>
+                <div class="box-content">
+                    <div class="box">
+                        <h1 class="title">Tabel Penilaian Pengguna</h1>
+                        <div>
+                            <form action="">
+                                <input type="text" name="cari" id="cari" placeholder="Cari dalam tabel">
+                                <button>Cari</button>
+                            </form>
                         </div>
-                        <div class="input-container">
-                            <label for="judul">Judul Tugas</label>
-                            <input type="text" name="judul" id="judul" value="Perancangan Sistem Kebut Semalam Berbasis IOKah?" disabled>
+                    </div>
+                    <div class="box">
+                        <div class="table-responsive">
+
+                            <table class="data-table">
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Kode Penilaian</th>
+                                    <th>Kode Pengguna</th>
+                                    <th>Kode Penjoki</th>
+                                    <th>Rating</th>
+                                    <th>Komentar</th>
+                                    <th>Dinilai Pada</th>
+                                    <th>Aksi</th>
+                                </tr>
+                                <?php $no = 1; ?>
+                                <?php foreach ($ratings as $rating) : ?>
+                                    <tr>
+                                        <td><?= $no++; ?></td>
+                                        <td><?= $rating['kd_penilaian']; ?></td>
+                                        <td><?= $rating['kd_pengguna']; ?></td>
+                                        <td><?= $rating['kd_penjoki']; ?></td>
+                                        <td class="rating">
+                                            <?php for ($i = 0; $i < $rating['rating']; $i++) : ?>
+                                                <i class="ri-star-fill"></i>
+                                            <?php endfor; ?>
+                                        </td>
+                                        <td class="desc"><?= $rating['komentar']; ?></td>
+                                        <td><?= $rating['dinilai_pada']; ?></td>
+                                        <td class="button-action">
+                                            <button class="warning" onclick="location.href='./rate_consultant.html'"><i class="ri-star-half-fill"></i></button>
+                                            <button><i class="ri-gallery-view-2"></i></button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </table>
                         </div>
-                        <div class="input-container">
-                            <label for="deskripsi">Deskripsi Tugas</label>
-                            <input type="text" name="deskripsi" id="deskripsi" value="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, suscipit?" disabled>
-                        </div>
-                        <div class="input-container">
-                            <label for="date">Tanggal Diajukan</label>
-                            <input type="text" name="date" id="date" value="14/05/2025" disabled>
-                        </div>
-                        <div class="input-container">
-                            <label for="judul">Nama Penjoki</label>
-                            <select name="nama_penjoki" id="nama_penjoki">
-                                <!-- The value will be the ID of the consultant -->
-                                <option value="John Nash">John Nash</option>
-                                <option value="Bruce Wayne">Bruce Wayne</option>
-                                <option value="Clark Kent">Clark Kent</option>
-                            </select>
-                        </div>
-                        <button class="button">Submit</button>
-                    </form>
+                    </div>
+                    <div class="box">
+                        <button>Sebelumnya</button>
+                        <button>1</button>
+                        <button>Selanjutnya</button>
+                    </div>
                 </div>
             </div>
         </section>
-        <!-- Form Content End -->
+        <!-- Content End -->
 
         <!-- Footer Start -->
         <footer>
-            <section class="footer shrink">
+            <section class="footer">
                 <p>Copyright &copy; 2025 Rafifbanner.</p>
             </section>
         </footer>

@@ -8,13 +8,12 @@ $perPage = 5;
 $start = ($page - 1) * $perPage;
 
 // Ambil data sesuai halaman
-$messages = query("SELECT * FROM tb_pesan ORDER BY created_at DESC LIMIT $start, $perPage");
+$payments = query("SELECT * FROM tb_pembayaran ORDER BY created_at DESC LIMIT $start, $perPage");
 
 // Hitung total data
-$total = count(query("SELECT * FROM tb_pesan"));
+$total = count(query("SELECT * FROM tb_pembayaran"));
 $totalPages = ceil($total / $perPage);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,7 +28,7 @@ $totalPages = ceil($total / $perPage);
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <title>Manajemen Pesan | Jokiin</title>
+    <title>Pembayaran | Jokiin</title>
 </head>
 
 <body>
@@ -47,15 +46,15 @@ $totalPages = ceil($total / $perPage);
             <i class="ri-group-line" onclick="location.href='user_management.php'"></i>
             <a href="./user_management.php">Manajemen Pengguna</a>
         </div>
-        <div class="box active">
+        <div class="box">
             <i class="ri-message-2-line" onclick="location.href='mail_management.php'"></i>
-            <a href="#">Manajemen Pesan</a>
+            <a href="./mail_management.php">Manajemen Pesan</a>
         </div>
         <div class="box">
             <i class="ri-list-check-3" onclick="location.href='tasks_list.php'"></i>
             <a href="./tasks_list.php">Tugas-tugas</a>
         </div>
-        <div class="box">
+        <div class="box active">
             <i class="ri-bank-card-line" onclick="location.href='payment.php'"></i>
             <a href="./payment.php">Pembayaran</a>
         </div>
@@ -81,7 +80,7 @@ $totalPages = ceil($total / $perPage);
             <div class="container">
                 <div class="box-header">
                     <div class="box">
-                        <h1>Manajemen Pesan</h1>
+                        <h1>Pembayaran</h1>
                     </div>
                     <div class="box">
                         <form action="">
@@ -100,12 +99,12 @@ $totalPages = ceil($total / $perPage);
             <div class="container">
                 <div class="breadcrumb">
                     <a href="./dashboard.html">Dashboard</a>
-                    <span>Manajemen Pesan</span>
+                    <span>Pembayaran</span>
                 </div>
 
                 <div class="box-content">
                     <div class="box">
-                        <h1 class="title">Tabel Manajemen Pesan</h1>
+                        <h1 class="title">Tabel Pembayaran</h1>
                         <div>
                             <form action="">
                                 <input type="text" name="cari" id="cari" placeholder="Cari dalam tabel">
@@ -114,25 +113,45 @@ $totalPages = ceil($total / $perPage);
                         </div>
                     </div>
                     <div class="box">
+
                         <div class="table-responsive">
-                            <table class="data-table">
+                            <table class="data-table long-table">
                                 <tr>
                                     <th>No.</th>
-                                    <th>Kode Pesan</th>
+                                    <th>Kode Pembayaran</th>
+                                    <th>Kode Tugas</th>
                                     <th>Kode Pengguna</th>
-                                    <th>Judul Pesan</th>
-                                    <th>Isi Pesan</th>
+                                    <th>Kode Penjoki</th>
+                                    <th>Pembayaran 1</th>
+                                    <th>Pembayaran 2</th>
+                                    <th>Bukti 1</th>
+                                    <th>Bukti 2</th>
+                                    <th>Tanggal Bayar 1</th>
+                                    <th>Tanggal Bayar 2</th>
+                                    <th>Total Bayar</th>
                                     <th>Aksi</th>
                                 </tr>
                                 <?php $no = 1; ?>
-                                <?php foreach ($messages as $message) : ?>
+                                <?php foreach ($payments as $payment) : ?>
                                     <tr>
                                         <td><?= $no++; ?></td>
-                                        <td><?= $message['kd_pesan']; ?></td>
-                                        <td><?= $message['kd_user']; ?></td>
-                                        <td><?= $message['judul_pesan']; ?></td>
-                                        <td class="desc"><?= $message['isi_pesan']; ?></td>
+                                        <td><?= $payment['kd_pembayaran']; ?></td>
+                                        <td><?= $payment['kd_tugas']; ?></td>
+                                        <td><?= $payment['kd_pengguna']; ?></td>
+                                        <td><?= $payment['kd_penjoki']; ?></td>
+                                        <td><?= $payment['is_paid_1']; ?></td>
+                                        <td><?= $payment['is_paid_2']; ?></td>
+                                        <td>
+                                            <a href="<?= $payment['bukti_pembayaran_1']; ?>"><i class="ri-eye-line"></i> Lihat</a>
+                                        </td>
+                                        <td>
+                                            <a href="<?= $payment['bukti_pembayaran_2']; ?>"><i class="ri-eye-line"></i> Lihat</a>
+                                        </td>
+                                        <td><?= $payment['tanggal_pembayaran_1']; ?></td>
+                                        <td><?= $payment['tanggal_pembayaran_2']; ?></td>
+                                        <td>Rp. <?= $payment['total_bayar']; ?></td>
                                         <td class="button-action">
+                                            <button class="warning"><i class="ri-pencil-line"></i></button>
                                             <button class="danger"><i class="ri-delete-bin-line"></i></button>
                                         </td>
                                     </tr>
@@ -141,24 +160,9 @@ $totalPages = ceil($total / $perPage);
                         </div>
                     </div>
                     <div class="box">
-                        <?php if ($page > 1): ?>
-                            <button onclick="location.href='?page=<?= $page - 1 ?>'">Sebelumnya</button>
-                        <?php else: ?>
-                            <button disabled>Sebelumnya</button>
-                        <?php endif; ?>
-
-                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                            <button onclick="location.href='?page=<?= $i ?>'"
-                                <?= $i == $page ? 'style="font-weight: bold;"' : '' ?>>
-                                <?= $i ?>
-                            </button>
-                        <?php endfor; ?>
-
-                        <?php if ($page < $totalPages): ?>
-                            <button onclick="location.href='?page=<?= $page + 1 ?>'">Selanjutnya</button>
-                        <?php else: ?>
-                            <button disabled>Selanjutnya</button>
-                        <?php endif; ?>
+                        <button>Sebelumnya</button>
+                        <button>1</button>
+                        <button>Selanjutnya</button>
                     </div>
                 </div>
             </div>

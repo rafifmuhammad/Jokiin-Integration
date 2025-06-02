@@ -55,12 +55,12 @@ $totalPages = ceil($total / $perPage);
             <a href="#">Tugas-tugas</a>
         </div>
         <div class="box">
-            <i class="ri-bank-card-line" onclick="location.href='payment.html'"></i>
-            <a href="./payment.html">Pembayaran</a>
+            <i class="ri-bank-card-line" onclick="location.href='payment.php'"></i>
+            <a href="./payment.php">Pembayaran</a>
         </div>
         <div class="box">
-            <i class="ri-star-half-line" onclick="location.href='rating.html'"></i>
-            <a href="./rating.html">Penilaian</a>
+            <i class="ri-star-half-line" onclick="location.href='rating.php'"></i>
+            <a href="./rating.php">Penilaian</a>
         </div>
         <div class="box">
             <i class="ri-home-5-line" onclick="location.href='./../home.html'"></i>
