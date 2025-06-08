@@ -12,7 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <title>Penilaian | Jokiin</title>
+    <title>Daftar Tugas | Jokiin</title>
 </head>
 
 <body>
@@ -28,23 +28,23 @@
         </div>
         <div class="box">
             <i class="ri-group-line" onclick="location.href='user_management.html'"></i>
-            <a href="#">Manajemen Pengguna</a>
+            <a href="./user_management.html">Manajemen Pengguna</a>
         </div>
         <div class="box">
             <i class="ri-message-2-line" onclick="location.href='mail_management.html'"></i>
             <a href="./mail_management.html">Manajemen Pesan</a>
         </div>
-        <div class="box">
+        <div class="box active">
             <i class="ri-list-check-3" onclick="location.href='tasks_list.html'"></i>
-            <a href="./tasks_list.html">Tugas-tugas</a>
+            <a href="#">Tugas-tugas</a>
         </div>
         <div class="box">
             <i class="ri-bank-card-line" onclick="location.href='payment.html'"></i>
             <a href="./payment.html">Pembayaran</a>
         </div>
-        <div class="box active">
+        <div class="box">
             <i class="ri-star-half-line" onclick="location.href='rating.html'"></i>
-            <a href="#">Penilaian</a>
+            <a href="./rating.html">Penilaian</a>
         </div>
         <div class="box">
             <i class="ri-home-5-line" onclick="location.href='./../home.html'"></i>
@@ -64,7 +64,7 @@
             <div class="container">
                 <div class="box-header">
                     <div class="box">
-                        <h1>Penilaian Pengguna</h1>
+                        <h1>Daftar Tugas</h1>
                     </div>
                     <div class="box">
                         <form action="">
@@ -83,17 +83,18 @@
             <div class="container">
                 <div class="breadcrumb">
                     <a href="./dashboard.html">Dashboard</a>
-                    <span>Penilaian Pengguna</span>
+                    <span>Daftar Tugas</span>
                 </div>
 
                 <div class="box-content">
                     <div class="box">
-                        <h1 class="title">Tabel Penilaian Pengguna</h1>
+                        <h1 class="title">Tabel Daftar Tugas</h1>
                         <div>
                             <form action="">
                                 <input type="text" name="cari" id="cari" placeholder="Cari dalam tabel">
                                 <button>Cari</button>
                             </form>
+                            <button class="primary" onclick="location.href='add_assignment.html'">Tambah Tugas</button>
                         </div>
                     </div>
                     <div class="box">
@@ -104,27 +105,49 @@
                                     <th>No.</th>
                                     <th>Kode Pengguna</th>
                                     <th>Kode Penjoki</th>
-                                    <th>Rating</th>
-                                    <th>Komentar</th>
-                                    <th>Dinilai Pada</th>
+                                    <th>Judul</th>
+                                    <th>Deskripsi</th>
+                                    <th>Jenis Tugas</th>
+                                    <th>Tanggal Diajukan</th>
+                                    <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                                 <tr>
                                     <td>1</td>
-                                    <td>user_2211</td>
-                                    <td>okewowo_212</td>
-                                    <td class="rating">
-                                        <i class="ri-star-fill"></i>
-                                        <i class="ri-star-fill"></i>
-                                        <i class="ri-star-fill"></i>
-                                        <i class="ri-star-fill"></i>
-                                        <i class="ri-star-fill"></i>
+                                    <td>user_2214</td>
+                                    <td>task_master_169</td>
+                                    <td class="desc"><strong>Perancangan Sistem Joki KP Tapi Yang Ngejoki Make GPT Berbasis Dontol</strong></td>
+                                    <td class="desc">Capek-capek pake gpt tapi ngerjain masih berjam-jam</td>
+                                    <td>Kerja Praktek</td>
+                                    <td>14/05/2025</td>
+                                    <td>
+                                        <div class="status finished">
+                                            Selesai
+                                        </div>
                                     </td>
-                                    <td class="desc">Gacor joki kp cuma beberapa jam siap aja, ngandalin gpt anjir. Pantes jokinya lama, sini tak ceplok 5 bintang</td>
-                                    <td>20/06/2025</td>
                                     <td class="button-action">
-                                        <button class="warning" onclick="location.href='./rate_consultant.html'"><i class="ri-star-half-fill"></i></button>
-                                        <button><i class="ri-gallery-view-2"></i></button>
+                                        <button class="warning" onclick="location.href='./edit_consultant.html'"><i class="ri-pencil-line"></i></button>
+                                        <button class="danger"><i class="ri-delete-bin-line"></i></button>
+                                        <button onclick="location.href='./../detail.html'"><i class="ri-gallery-view-2"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>user_2211</td>
+                                    <td>task_master_69</td>
+                                    <td class="desc"><strong>Perancangan Sistem Pendukung Keputusan di Kantor Bagan Si Dontol-dontol</strong></td>
+                                    <td class="desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, officia!</td>
+                                    <td>Kerja Praktek</td>
+                                    <td>20/04/2025</td>
+                                    <td>
+                                        <div class="status">
+                                            Belum Selesai
+                                        </div>
+                                    </td>
+                                    <td class="button-action">
+                                        <button class="warning" onclick="location.href='./edit_consultant.html'"><i class="ri-pencil-line"></i></button>
+                                        <button class="danger"><i class="ri-delete-bin-line"></i></button>
+                                        <button onclick="location.href='./../detail.html'"><i class="ri-gallery-view-2"></i></button>
                                     </td>
                                 </tr>
                             </table>
@@ -142,7 +165,7 @@
 
         <!-- Footer Start -->
         <footer>
-            <section class="footer">
+            <section class="footer shrink">
                 <p>Copyright &copy; 2025 Rafifbanner.</p>
             </section>
         </footer>

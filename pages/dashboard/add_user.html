@@ -12,7 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <title>Dashboard</title>
+    <title>Tambahkan Pengguna | Jokiin</title>
 </head>
 
 <body>
@@ -22,9 +22,9 @@
             <h1>Joki.In</h1>
             <i class="ri-menu-2-line menu-bar"></i>
         </div>
-        <div class="box active">
+        <div class="box">
             <i class="ri-dashboard-line" onclick="location.href='dashboard.html'"></i>
-            <a href="#">Dashboard</a>
+            <a href="./dashboard.html">Dashboard</a>
         </div>
         <div class="box">
             <i class="ri-group-line" onclick="location.href='user_management.html'"></i>
@@ -64,7 +64,7 @@
             <div class="container">
                 <div class="box-header">
                     <div class="box">
-                        <h1>Dashboard</h1>
+                        <h1>Tambahkan Pengguna</h1>
                     </div>
                     <div class="box">
                         <form action="">
@@ -78,42 +78,49 @@
         </section>
         <!-- Header End -->
 
-        <!-- Dashboard Start -->
-        <section class="dashboard-content shrink">
+        <!-- Form Content Start -->
+        <section class="form-content shrink">
             <div class="container">
-                <div class="box-dashboard-content">
-                    <div class="box">
-                        <i class="ri-account-circle-line"></i>
-                        <div>
-                            <h1>21</h1>
-                            <p>Jumlah Pengguna</p>
+                <div class="breadcrumb">
+                    <a href="./dashboard.html">Dashboard</a>
+                    <a href="./tasks_list.html">Manajemen Pengguna</a>
+                    <span>Tambahkan Pengguna</span>
+                </div>
+
+                <div class="box-form-content">
+                    <form action="">
+                        <div class="input-container">
+                            <label for="nama">Nama Lengkap</label>
+                            <input type="text" name="nama" id="nama" placeholder="Masukkan nama lengkap">
                         </div>
-                    </div>
-                    <div class="box">
-                        <i class="ri-article-line"></i>
-                        <div>
-                            <h1>8</h1>
-                            <p>Jumlah Tugas</p>
+                        <div class="input-container">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" placeholder="Masukkan email" autocomplete="off">
                         </div>
-                    </div>
-                    <div class="box">
-                        <i class="ri-task-line"></i>
-                        <div>
-                            <h1>4</h1>
-                            <p>Tugas Diselesaikan</p>
+                        <div class="input-container">
+                            <label for="profesi">Profesi</label>
+                            <select name="profesi" id="profesi">
+                                <option value="Mahasiswa">Mahasiswa</option>
+                                <option value="Pelajar">Pelajar</option>
+                            </select>
                         </div>
-                    </div>
-                    <div class="box">
-                        <i class="ri-file-add-line"></i>
-                        <div>
-                            <h1>4</h1>
-                            <p>Tugas Tersedia</p>
+                        <div class="input-container">
+                            <label for="role">Role</label>
+                            <select name="role" id="role">
+                                <option value="Pengguna">Pengguna</option>
+                                <option value="Penjoki">Penjoki</option>
+                            </select>
                         </div>
-                    </div>
+                        <div class="input-container">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" id="password" placeholder="Masukkan password">
+                        </div>
+                        <button class="button">Submit</button>
+                    </form>
                 </div>
             </div>
         </section>
-        <!-- Dashboard End -->
+        <!-- Form Content End -->
 
         <!-- Footer Start -->
         <footer>

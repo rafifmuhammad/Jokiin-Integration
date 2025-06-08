@@ -289,12 +289,11 @@ td {
 }
 
 .data-table td.desc {
-    text-align: left;
+    text-align: justify;
     line-height: 16px;
     max-width: 200px;
     white-space: normal;
     word-break: break-word;
-    line-height: 32px;
 }
 
 .data-table th {

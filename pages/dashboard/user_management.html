@@ -12,7 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <title>Penilaian | Jokiin</title>
+    <title>Manajemen Pengguna | Jokiin</title>
 </head>
 
 <body>
@@ -26,7 +26,7 @@
             <i class="ri-dashboard-line" onclick="location.href='dashboard.html'"></i>
             <a href="./dashboard.html">Dashboard</a>
         </div>
-        <div class="box">
+        <div class="box active">
             <i class="ri-group-line" onclick="location.href='user_management.html'"></i>
             <a href="#">Manajemen Pengguna</a>
         </div>
@@ -42,9 +42,9 @@
             <i class="ri-bank-card-line" onclick="location.href='payment.html'"></i>
             <a href="./payment.html">Pembayaran</a>
         </div>
-        <div class="box active">
+        <div class="box">
             <i class="ri-star-half-line" onclick="location.href='rating.html'"></i>
-            <a href="#">Penilaian</a>
+            <a href="./rating.html">Penilaian</a>
         </div>
         <div class="box">
             <i class="ri-home-5-line" onclick="location.href='./../home.html'"></i>
@@ -64,7 +64,7 @@
             <div class="container">
                 <div class="box-header">
                     <div class="box">
-                        <h1>Penilaian Pengguna</h1>
+                        <h1>Manajemen Pengguna</h1>
                     </div>
                     <div class="box">
                         <form action="">
@@ -83,47 +83,72 @@
             <div class="container">
                 <div class="breadcrumb">
                     <a href="./dashboard.html">Dashboard</a>
-                    <span>Penilaian Pengguna</span>
+                    <span>Manajemen Pengguna</span>
                 </div>
 
                 <div class="box-content">
                     <div class="box">
-                        <h1 class="title">Tabel Penilaian Pengguna</h1>
+                        <h1 class="title">Tabel Manajemen Pengguna</h1>
                         <div>
                             <form action="">
                                 <input type="text" name="cari" id="cari" placeholder="Cari dalam tabel">
                                 <button>Cari</button>
                             </form>
+                            <button class="primary" onclick="location.href='add_user.html'">Tambah Pengguna</button>
                         </div>
                     </div>
                     <div class="box">
                         <div class="table-responsive">
-
                             <table class="data-table">
                                 <tr>
                                     <th>No.</th>
                                     <th>Kode Pengguna</th>
-                                    <th>Kode Penjoki</th>
-                                    <th>Rating</th>
-                                    <th>Komentar</th>
-                                    <th>Dinilai Pada</th>
+                                    <th>Nama</th>
+                                    <th>Email</th>
+                                    <th>No. HP</th>
+                                    <th>Profesi</th>
+                                    <th>Role</th>
                                     <th>Aksi</th>
                                 </tr>
                                 <tr>
                                     <td>1</td>
                                     <td>user_2211</td>
-                                    <td>okewowo_212</td>
-                                    <td class="rating">
-                                        <i class="ri-star-fill"></i>
-                                        <i class="ri-star-fill"></i>
-                                        <i class="ri-star-fill"></i>
-                                        <i class="ri-star-fill"></i>
-                                        <i class="ri-star-fill"></i>
-                                    </td>
-                                    <td class="desc">Gacor joki kp cuma beberapa jam siap aja, ngandalin gpt anjir. Pantes jokinya lama, sini tak ceplok 5 bintang</td>
-                                    <td>20/06/2025</td>
+                                    <td>John Nash</td>
+                                    <td>john@gmail.com</td>
+                                    <td>082169554992</td>
+                                    <td>Mahasiswa</td>
+                                    <td>Penjoki</td>
                                     <td class="button-action">
-                                        <button class="warning" onclick="location.href='./rate_consultant.html'"><i class="ri-star-half-fill"></i></button>
+                                        <button class="warning"><i class="ri-pencil-line"></i></button>
+                                        <button class="danger"><i class="ri-delete-bin-line"></i></button>
+                                        <button><i class="ri-gallery-view-2"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>user_2212</td>
+                                    <td>Bruce Wayne</td>
+                                    <td>imbatmanforreal@gmail.com</td>
+                                    <td>082169554442</td>
+                                    <td>Mahasiswa</td>
+                                    <td>Penjoki</td>
+                                    <td class="button-action">
+                                        <button class="warning"><i class="ri-pencil-line"></i></button>
+                                        <button class="danger"><i class="ri-delete-bin-line"></i></button>
+                                        <button><i class="ri-gallery-view-2"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>user_2213</td>
+                                    <td>Jack Reacher</td>
+                                    <td>jack.reacher@gmail.com</td>
+                                    <td>082123556932</td>
+                                    <td>Mahasiswa</td>
+                                    <td>Pengguna</td>
+                                    <td class="button-action">
+                                        <button class="warning"><i class="ri-pencil-line"></i></button>
+                                        <button class="danger"><i class="ri-delete-bin-line"></i></button>
                                         <button><i class="ri-gallery-view-2"></i></button>
                                     </td>
                                 </tr>
@@ -142,7 +167,7 @@
 
         <!-- Footer Start -->
         <footer>
-            <section class="footer">
+            <section class="footer shrink">
                 <p>Copyright &copy; 2025 Rafifbanner.</p>
             </section>
         </footer>

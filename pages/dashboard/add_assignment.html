@@ -12,7 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <title>Dashboard</title>
+    <title>Tambahkan Tugas | Jokiin</title>
 </head>
 
 <body>
@@ -22,9 +22,9 @@
             <h1>Joki.In</h1>
             <i class="ri-menu-2-line menu-bar"></i>
         </div>
-        <div class="box active">
+        <div class="box">
             <i class="ri-dashboard-line" onclick="location.href='dashboard.html'"></i>
-            <a href="#">Dashboard</a>
+            <a href="./dashboard.html">Dashboard</a>
         </div>
         <div class="box">
             <i class="ri-group-line" onclick="location.href='user_management.html'"></i>
@@ -64,7 +64,7 @@
             <div class="container">
                 <div class="box-header">
                     <div class="box">
-                        <h1>Dashboard</h1>
+                        <h1>Tambahkan Tugas</h1>
                     </div>
                     <div class="box">
                         <form action="">
@@ -78,42 +78,37 @@
         </section>
         <!-- Header End -->
 
-        <!-- Dashboard Start -->
-        <section class="dashboard-content shrink">
+        <!-- Form Content Start -->
+        <section class="form-content shrink">
             <div class="container">
-                <div class="box-dashboard-content">
-                    <div class="box">
-                        <i class="ri-account-circle-line"></i>
-                        <div>
-                            <h1>21</h1>
-                            <p>Jumlah Pengguna</p>
+                <div class="breadcrumb">
+                    <a href="./dashboard.html">Dashboard</a>
+                    <a href="./tasks_list.html">Daftar Tugas</a>
+                    <span>Tambahkan Tugas</span>
+                </div>
+
+                <div class="box-form-content">
+                    <form action="">
+                        <div class="input-container">
+                            <label for="judul">Judul Tugas</label>
+                            <input type="text" name="judul" id="judul" placeholder="Masukkan judul tugas">
                         </div>
-                    </div>
-                    <div class="box">
-                        <i class="ri-article-line"></i>
-                        <div>
-                            <h1>8</h1>
-                            <p>Jumlah Tugas</p>
+                        <div class="input-container">
+                            <label for="deskripsi">Masukkan deskripsi</label>
+                            <textarea name="deskripsi" id="deskripsi" placeholder="Tuliskan deskripsi"></textarea>
                         </div>
-                    </div>
-                    <div class="box">
-                        <i class="ri-task-line"></i>
-                        <div>
-                            <h1>4</h1>
-                            <p>Tugas Diselesaikan</p>
+                        <div class="input-container">
+                            <label for="jenis">Jenis Tugas</label>
+                            <select name="jenis" id="jenis">
+                                <option value="Kerja Praktek">Kerja Praktek</option>
+                            </select>
                         </div>
-                    </div>
-                    <div class="box">
-                        <i class="ri-file-add-line"></i>
-                        <div>
-                            <h1>4</h1>
-                            <p>Tugas Tersedia</p>
-                        </div>
-                    </div>
+                        <button class="button">Submit</button>
+                    </form>
                 </div>
             </div>
         </section>
-        <!-- Dashboard End -->
+        <!-- Form Content End -->
 
         <!-- Footer Start -->
         <footer>
