@@ -1,3 +1,36 @@
+<?php
+include './../../includes/function.php';
+
+$id = $_GET['kd_tugas'];
+
+// Get single data of task
+$task = query("SELECT * FROM tb_tugas WHERE kd_tugas = '$id'");
+
+// Get single data of user
+$idTugas = $task[0]['kd_tugas'];
+$user = query("SELECT * FROM tb_users, tb_tugas WHERE tb_users.kd_user = tb_tugas.kd_user AND tb_tugas.kd_tugas = '$idTugas'");
+
+// Get consultants 
+$consultants = query("SELECT * FROM tb_users WHERE role = 'Penjoki'");
+
+if (isset($_POST['submit'])) {
+    if (updateConsultant($_POST) > 0) {
+        echo "
+                <script>
+                    alert('Tugas berhasil diubah!');
+                    document.location.href = './tasks_list.php';
+                </script>
+            ";
+    } else {
+        echo "
+                <script>
+                    alert('Tugas gagal diubah!');
+                    
+                </script>
+            ";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +45,7 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <title>Nilai Penjoki | Jokiin</title>
+    <title>Tugaskan Penjoki | Jokiin</title>
 </head>
 
 <body>
@@ -64,7 +97,7 @@
             <div class="container">
                 <div class="box-header">
                     <div class="box">
-                        <h1>Nilai Penjoki</h1>
+                        <h1>Tugaskan Penjoki</h1>
                     </div>
                     <div class="box">
                         <form action="">
@@ -83,32 +116,47 @@
             <div class="container">
                 <div class="breadcrumb">
                     <a href="./dashboard.html">Dashboard</a>
-                    <a href="./rating.php">Penilaian Pengguna</a>
-                    <span>Nilai Penjoki</span>
+                    <a href="./tasks_list.php">Daftar Tugas</a>
+                    <span>Tugaskan Penjoki</span>
                 </div>
 
                 <div class="box-form-content">
-                    <form action="">
+                    <form action="" method="POST">
+                        <input type="hidden" name="kd_tugas" id="kd_tugas" value="<?= $task[0]['kd_tugas']; ?>">
                         <div class="input-container">
-                            <label for="nama_client">Nama Penjoki</label>
-                            <input type="text" name="nama_client" id="nama_client" value="Robert" disabled>
+                            <label for="nama_client">Nama Client</label>
+                            <input type="text" name="nama_client" id="nama_client" value="<?= $user[0]['nama_lengkap']; ?>" readonly>
                         </div>
                         <div class="input-container">
-                            <label for="komentar">Berikan Komentar</label>
-                            <textarea name="komentar" id="komentar" placeholder="Tuliskan komentar Anda"></textarea>
+                            <label for="judul">Judul Tugas</label>
+                            <input type="text" name="judul" id="judul" value="<?= $task[0]['judul']; ?>">
                         </div>
                         <div class="input-container">
-                            <label for="judul">Beri Nilai</label>
-                            <select name="nama_penjoki" id="nama_penjoki">
+                            <label for="deskripsi">Deskripsi Tugas</label>
+                            <input type="text" name="deskripsi" id="deskripsi" value="<?= $task[0]['deskripsi']; ?>" readonly>
+                        </div>
+                        <div class="input-container">
+                            <label for="created_at">Tanggal Diajukan</label>
+                            <input type="text" name="created_at" id="created_at" value="<?= $task[0]['created_at']; ?>" readonly>
+                        </div>
+                        <div class="input-container">
+                            <label for="judul">Nama Penjoki</label>
+                            <select name="kd_penjoki" id="kd_penjoki">
                                 <!-- The value will be the ID of the consultant -->
-                                <option value="1">Nilai 1 Point</option>
-                                <option value="2">Nilai 2 Point</option>
-                                <option value="3">Nilai 3 Point</option>
-                                <option value="4">Nilai 4 Point</option>
-                                <option value="5">Nilai 5 Point</option>
+                                <?php if (!empty($user[0]['kd_penjoki'])) : ?>
+                                    <option value="<?= $user[0]['kd_penjoki']; ?>" selected><?= $user[0]['nama_lengkap']; ?></option>
+                                    <?php foreach ($consultants as $consultant) : ?>
+                                        <?php if ($consultant['kd_user'] === $user[0]['kd_penjoki']) continue ?>
+                                        <option value="<?= $consultant['kd_user']; ?>"><?= $consultant['nama_lengkap']; ?></option>
+                                    <?php endforeach; ?>
+                                <?php else : ?>
+                                    <?php foreach ($consultants as $consultant) : ?>
+                                        <option value="<?= $consultant['kd_user']; ?>"><?= $consultant['nama_lengkap']; ?></option>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </select>
                         </div>
-                        <button class="button">Submit</button>
+                        <button type="submit" class="button" name="submit">Submit</button>
                     </form>
                 </div>
             </div>
@@ -124,6 +172,8 @@
         <!-- Footer End -->
     </div>
     <!-- Main-app -->
+
+    <script src="./../../dist/js/script.js"></script>
 </body>
 
 </html>

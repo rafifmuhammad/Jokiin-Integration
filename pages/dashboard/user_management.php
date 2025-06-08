@@ -137,8 +137,8 @@ $totalPages = ceil($total / $perPage);
                                         <td><?= $user['profesi']; ?></td>
                                         <td><?= $user['role']; ?></td>
                                         <td class="button-action">
-                                            <button class="warning"><i class="ri-pencil-line"></i></button>
-                                            <button class="danger"><i class="ri-delete-bin-line"></i></button>
+                                            <button class="warning" onclick="location.href='./../edit_profile.php?kd_user=<?= $user['kd_user']; ?>'"><i class="ri-pencil-line"></i></button>
+                                            <button class="danger" onclick="location.href='delete_user.php?kd_user=<?= $user['kd_user']; ?>'"><i class="ri-delete-bin-line"></i></button>
                                             <button><i class="ri-gallery-view-2"></i></button>
                                         </td>
                                     </tr>

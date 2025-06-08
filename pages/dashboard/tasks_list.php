@@ -106,7 +106,7 @@ $totalPages = ceil($total / $perPage);
                     <div class="box">
                         <h1 class="title">Tabel Daftar Tugas</h1>
                         <div>
-                            <form action="">
+                            <form action="" method="POST">
                                 <input type="text" name="cari" id="cari" placeholder="Cari dalam tabel">
                                 <button>Cari</button>
                             </form>
@@ -145,7 +145,7 @@ $totalPages = ceil($total / $perPage);
                                             </div>
                                         </td>
                                         <td class="button-action">
-                                            <button class="warning" onclick="location.href='./edit_consultant.html'"><i class="ri-pencil-line"></i></button>
+                                            <button class="warning" onclick="location.href='./edit_consultant.php?kd_tugas=<?= $assignment['kd_tugas']; ?>'"><i class="ri-pencil-line"></i></button>
                                             <button class="danger"><i class="ri-delete-bin-line"></i></button>
                                             <button onclick="location.href='./../detail.html'"><i class="ri-gallery-view-2"></i></button>
                                         </td>
