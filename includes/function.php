@@ -30,18 +30,39 @@ function addAssignment($data)
 
     $kdTugas = uniqid();
     $kdUser = "user_1";
-    $kdPenjoki = "user_2";
     $judul = htmlspecialchars($data['judul']);
     $deskripsi = htmlspecialchars($data['deskripsi']);
     $assignmentType = htmlspecialchars($data['jenis']);
     $isFinished = "false";
     $createdAt = date('Y-m-d');
 
-    $query = "INSERT INTO tb_tugas 
-    (kd_tugas, kd_user, kd_penjoki, judul, deskripsi, is_finished, assignment_type, created_at) 
-    VALUES ('$kdTugas', '$kdUser', '$kdPenjoki', '$judul', '$deskripsi', '$isFinished', '$assignmentType', '$createdAt')";
+    // Payment variables
+    $kdPembayaran = uniqid();
+    $kdUser = 'user_2';
+    $createdAt = date('Y-m-d');
+    $totalBayar = 0;
+    $jenisTugas = $data['jenis'];
+    $isPaid1 = false;
+    $isPaid2 = false;
+
+    if ($jenisTugas == 'Kerja Praktek') {
+        $totalBayar = 400000;
+    } else {
+        exit;
+    }
+
+    // Query for table tugas
+    $query = "INSERT INTO tb_tugas
+    (kd_tugas, kd_user, judul, deskripsi, is_finished, assignment_type, created_at) 
+    VALUES ('$kdTugas', '$kdUser', '$judul', '$deskripsi', '$isFinished', '$assignmentType', '$createdAt')";
+
+    // Query for table payment
+    $queryPayment = "INSERT INTO tb_pembayaran 
+    (kd_pembayaran, kd_tugas, kd_pengguna, total_bayar, created_at, is_paid_1, is_paid_2)
+    VALUES ('$kdPembayaran', '$kdTugas', '$kdUser', $totalBayar, '$createdAt', '$isPaid1', '$isPaid2')";
 
     mysqli_query($conn, $query);
+    mysqli_query($conn, $queryPayment);
     echo mysqli_error($conn);
 
     return mysqli_affected_rows($conn);
@@ -51,7 +72,7 @@ function deleteAssignment($id)
 {
     global $conn;
 
-    $query = "DELETE FROM tb_tugas WHERE id_tugas = '$id'";
+    $query = "DELETE FROM tb_tugas WHERE kd_tugas = '$id'";
 
     mysqli_query($conn, $query);
 
@@ -162,6 +183,27 @@ function editUser($data)
 function addPayment($data)
 {
     global $conn;
+
+    $kdPembayaran = uniqid();
+    $kdTugas = $data['kd_tugas'];
+    $kdUser = 'user_2';
+    $createdAt = date('Y-m-d');
+    $totalBayar = 0;
+    $tag = $data['jenis'];
+
+    if ($tag == 'Kerja Praktek') {
+        $totalBayar = 400000;
+    } else {
+        exit;
+    }
+
+    $query = "INSERT INTO tb_pembayaran 
+    (kd_pembayaran, kd_tugas, kd_pengguna, total_bayar, created_at)
+    VALUES ('$kdPembayaran', '$kdTugas', '$kdUser', $totalBayar, '$createdAt')";
+
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
 }
 
 // Message Functions 

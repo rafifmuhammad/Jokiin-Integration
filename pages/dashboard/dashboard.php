@@ -12,7 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <title>Nilai Penjoki | Jokiin</title>
+    <title>Dashboard</title>
 </head>
 
 <body>
@@ -22,9 +22,9 @@
             <h1>Joki.In</h1>
             <i class="ri-menu-2-line menu-bar"></i>
         </div>
-        <div class="box">
+        <div class="box active">
             <i class="ri-dashboard-line" onclick="location.href='dashboard.php'"></i>
-            <a href="./dashboard.php">Dashboard</a>
+            <a href="#">Dashboard</a>
         </div>
         <div class="box">
             <i class="ri-group-line" onclick="location.href='user_management.php'"></i>
@@ -64,7 +64,7 @@
             <div class="container">
                 <div class="box-header">
                     <div class="box">
-                        <h1>Nilai Penjoki</h1>
+                        <h1>Dashboard</h1>
                     </div>
                     <div class="box">
                         <form action="">
@@ -78,42 +78,42 @@
         </section>
         <!-- Header End -->
 
-        <!-- Form Content Start -->
-        <section class="form-content shrink">
+        <!-- Dashboard Start -->
+        <section class="dashboard-content shrink">
             <div class="container">
-                <div class="breadcrumb">
-                    <a href="./dashboard.php">Dashboard</a>
-                    <a href="./rating.php">Penilaian Pengguna</a>
-                    <span>Nilai Penjoki</span>
-                </div>
-
-                <div class="box-form-content">
-                    <form action="">
-                        <div class="input-container">
-                            <label for="nama_client">Nama Penjoki</label>
-                            <input type="text" name="nama_client" id="nama_client" value="Robert" disabled>
+                <div class="box-dashboard-content">
+                    <div class="box">
+                        <i class="ri-account-circle-line"></i>
+                        <div>
+                            <h1>21</h1>
+                            <p>Jumlah Pengguna</p>
                         </div>
-                        <div class="input-container">
-                            <label for="komentar">Berikan Komentar</label>
-                            <textarea name="komentar" id="komentar" placeholder="Tuliskan komentar Anda"></textarea>
+                    </div>
+                    <div class="box">
+                        <i class="ri-article-line"></i>
+                        <div>
+                            <h1>8</h1>
+                            <p>Jumlah Tugas</p>
                         </div>
-                        <div class="input-container">
-                            <label for="judul">Beri Nilai</label>
-                            <select name="nama_penjoki" id="nama_penjoki">
-                                <!-- The value will be the ID of the consultant -->
-                                <option value="1">Nilai 1 Point</option>
-                                <option value="2">Nilai 2 Point</option>
-                                <option value="3">Nilai 3 Point</option>
-                                <option value="4">Nilai 4 Point</option>
-                                <option value="5">Nilai 5 Point</option>
-                            </select>
+                    </div>
+                    <div class="box">
+                        <i class="ri-task-line"></i>
+                        <div>
+                            <h1>4</h1>
+                            <p>Tugas Diselesaikan</p>
                         </div>
-                        <button class="button">Submit</button>
-                    </form>
+                    </div>
+                    <div class="box">
+                        <i class="ri-file-add-line"></i>
+                        <div>
+                            <h1>4</h1>
+                            <p>Tugas Tersedia</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
-        <!-- Form Content End -->
+        <!-- Dashboard End -->
 
         <!-- Footer Start -->
         <footer>
@@ -124,6 +124,8 @@
         <!-- Footer End -->
     </div>
     <!-- Main-app -->
+
+    <script src="./../../dist/js/script.js"></script>
 </body>
 
 </html>

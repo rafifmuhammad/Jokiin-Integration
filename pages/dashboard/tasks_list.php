@@ -39,8 +39,8 @@ $totalPages = ceil($total / $perPage);
             <i class="ri-menu-2-line menu-bar"></i>
         </div>
         <div class="box">
-            <i class="ri-dashboard-line" onclick="location.href='dashboard.html'"></i>
-            <a href="./dashboard.html">Dashboard</a>
+            <i class="ri-dashboard-line" onclick="location.href='dashboard.php'"></i>
+            <a href="./dashboard.php">Dashboard</a>
         </div>
         <div class="box">
             <i class="ri-group-line" onclick="location.href='user_management.php'"></i>
@@ -98,7 +98,7 @@ $totalPages = ceil($total / $perPage);
         <section class="content shrink">
             <div class="container">
                 <div class="breadcrumb">
-                    <a href="./dashboard.html">Dashboard</a>
+                    <a href="./dashboard.php">Dashboard</a>
                     <span>Daftar Tugas</span>
                 </div>
 
@@ -146,7 +146,7 @@ $totalPages = ceil($total / $perPage);
                                         </td>
                                         <td class="button-action">
                                             <button class="warning" onclick="location.href='./edit_consultant.php?kd_tugas=<?= $assignment['kd_tugas']; ?>'"><i class="ri-pencil-line"></i></button>
-                                            <button class="danger"><i class="ri-delete-bin-line"></i></button>
+                                            <button class="danger" onclick="location.href='./delete_task.php?kd_tugas=<?= $assignment['kd_tugas']; ?>'"><i class="ri-delete-bin-line"></i></button>
                                             <button onclick="location.href='./../detail.html'"><i class="ri-gallery-view-2"></i></button>
                                         </td>
                                     </tr>

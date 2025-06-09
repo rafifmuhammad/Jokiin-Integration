@@ -52,7 +52,7 @@ if (isset($_POST['submit'])) {
                     <h2><a href="./home.html">Joki.In</a></h2>
                     <ul>
                         <li><a href="./home.html">Beranda</a></li>
-                        <li><a href="./dashboard/dashboard.html">Dashboard</a></li>
+                        <li><a href="./dashboard/dashboard.php">Dashboard</a></li>
                         <li><a href="./riwayat.html">Riwayat</a></li>
                     </ul>
                 </div>
@@ -95,8 +95,8 @@ if (isset($_POST['submit'])) {
                             <a href="./home.html">Beranda</a>
                         </li>
                         <li>
-                            <i class="ri-dashboard-line" onclick="location.href='dashboard.html'"></i>
-                            <a href="./dashboard/dashboard.html">Dashboard</a>
+                            <i class="ri-dashboard-line" onclick="location.href='dashboard.php'"></i>
+                            <a href="./dashboard/dashboard.php">Dashboard</a>
                         </li>
                         <li>
                             <i class="ri-history-line"></i>

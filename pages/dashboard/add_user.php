@@ -45,8 +45,8 @@ if (isset($_POST['submit'])) {
             <i class="ri-menu-2-line menu-bar"></i>
         </div>
         <div class="box">
-            <i class="ri-dashboard-line" onclick="location.href='dashboard.html'"></i>
-            <a href="./dashboard.html">Dashboard</a>
+            <i class="ri-dashboard-line" onclick="location.href='dashboard.php'"></i>
+            <a href="./dashboard.php">Dashboard</a>
         </div>
         <div class="box">
             <i class="ri-group-line" onclick="location.href='user_management.php'"></i>
@@ -104,7 +104,7 @@ if (isset($_POST['submit'])) {
         <section class="form-content shrink">
             <div class="container">
                 <div class="breadcrumb">
-                    <a href="./dashboard.html">Dashboard</a>
+                    <a href="./dashboard.php">Dashboard</a>
                     <a href="./tasks_list.php">Manajemen Pengguna</a>
                     <span>Tambahkan Pengguna</span>
                 </div>

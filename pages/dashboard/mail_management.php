@@ -40,8 +40,8 @@ $totalPages = ceil($total / $perPage);
             <i class="ri-menu-2-line menu-bar"></i>
         </div>
         <div class="box">
-            <i class="ri-dashboard-line" onclick="location.href='dashboard.html'"></i>
-            <a href="./dashboard.html">Dashboard</a>
+            <i class="ri-dashboard-line" onclick="location.href='dashboard.php'"></i>
+            <a href="./dashboard.php">Dashboard</a>
         </div>
         <div class="box">
             <i class="ri-group-line" onclick="location.href='user_management.php'"></i>
@@ -99,7 +99,7 @@ $totalPages = ceil($total / $perPage);
         <section class="content shrink">
             <div class="container">
                 <div class="breadcrumb">
-                    <a href="./dashboard.html">Dashboard</a>
+                    <a href="./dashboard.php">Dashboard</a>
                     <span>Manajemen Pesan</span>
                 </div>
 
