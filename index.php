@@ -13,6 +13,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <title>Jokiin | Landing Page</title>
+
 </head>
 
 <body>
@@ -28,7 +29,7 @@
                         <ul>
                             <li><a href="#">Cara Kerja</a></li>
                             <li><a href="#">Kontak Kami</a></li>
-                            <li><a href="./pages/login.html">Masuk</a></li>
+                            <li><a href="./pages/login.php">Masuk</a></li>
                             <li><button>Bergabung Dengan Kami</button></li>
                         </ul>
                     </div>
@@ -45,7 +46,7 @@
                             </li>
                             <li>
                                 <i class="ri-login-circle-line"></i>
-                                <a href="./pages/login.html">Masuk</a>
+                                <a href="./pages/login.php">Masuk</a>
                             </li>
                         </ul>
                     </div>
@@ -63,7 +64,7 @@
                 <h1 class="animate__animated animate__fadeInLeft animate__slow">Temukan Jasa Yang Anda Butuhkan Dari Penjoki Yang Siap Membantu Anda.</h1>
                 <p class="animate__animated animate__fadeInLeft animate__slow">Kami akan membantu Anda dalam menyelesaikan tugas-tugas Anda</p>
                 <div class="animate__animated animate__fadeInLeft animate__slow">
-                    <button onclick="location.href='./pages/register.html'" class="button">Daftar Sekarang</button>
+                    <button onclick="location.href='./pages/register.php'" class="button">Daftar Sekarang</button>
                     <i class="ri-arrow-right-s-line"></i>
                 </div>
             </div>
@@ -209,6 +210,8 @@
     <script>
         AOS.init();
     </script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 </body>
 
 </html>

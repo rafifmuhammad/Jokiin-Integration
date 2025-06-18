@@ -1,5 +1,17 @@
 <?php
+session_start();
+
+// Check the session
+if (!isset($_SESSION['login'])) {
+    header('Location: login.php');
+    exit;
+}
+
 include './../../includes/function.php';
+
+// Get user's session data
+$email = $_SESSION['email'];
+$user = query("SELECT DISTINCT * FROM tb_users WHERE email = '$email'");
 
 // Pagination Set up
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
@@ -29,6 +41,7 @@ $totalPages = ceil($total / $perPage);
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <title>Manajemen Pengguna | Jokiin</title>
+
 </head>
 
 <body>
@@ -42,10 +55,12 @@ $totalPages = ceil($total / $perPage);
             <i class="ri-dashboard-line" onclick="location.href='dashboard.php'"></i>
             <a href="./dashboard.php">Dashboard</a>
         </div>
-        <div class="box active">
-            <i class="ri-group-line" onclick="location.href='user_management.php'"></i>
-            <a href="#">Manajemen Pengguna</a>
-        </div>
+        <?php if ($user[0]['role'] == 'Admin') : ?>
+            <div class="box">
+                <i class="ri-group-line" onclick="location.href='user_management.php'"></i>
+                <a href="#">Manajemen Pengguna</a>
+            </div>
+        <?php endif; ?>
         <div class="box">
             <i class="ri-message-2-line" onclick="location.href='mail_management.php'"></i>
             <a href="./mail_management.php">Manajemen Pesan</a>
@@ -63,12 +78,12 @@ $totalPages = ceil($total / $perPage);
             <a href="./rating.php">Penilaian</a>
         </div>
         <div class="box">
-            <i class="ri-home-5-line" onclick="location.href='./../home.html'"></i>
-            <a href="./../home.html">Beranda</a>
+            <i class="ri-home-5-line" onclick="location.href='./../home.php'"></i>
+            <a href="./../home.php">Beranda</a>
         </div>
         <div class="box">
-            <i class="ri-logout-circle-line" onclick="location.href='./../../index.html'"></i>
-            <a href="./../../index.html">Keluar</a>
+            <i class="ri-logout-circle-line" onclick="location.href='./../logout.php'"></i>
+            <a href="./../logout.php">Keluar</a>
         </div>
     </section>
     <!-- Sidebar End -->
@@ -87,7 +102,7 @@ $totalPages = ceil($total / $perPage);
                             <input type="text" name="cari" id="cari" placeholder="Cari sesuatu">
                         </form>
                         <img src="./../../img/user-1.jpg" alt="user-1">
-                        <h2>John Nash</h2>
+                        <h2><?= $user[0]['nama_lengkap']; ?></h2>
                     </div>
                 </div>
             </div>
@@ -126,23 +141,29 @@ $totalPages = ceil($total / $perPage);
                                     <th>Role</th>
                                     <th>Aksi</th>
                                 </tr>
-                                <?php $no = 1; ?>
-                                <?php foreach ($users as $user) : ?>
+                                <?php if (!empty($users)) : ?>
+                                    <?php $no = 1; ?>
+                                    <?php foreach ($users as $user) : ?>
+                                        <tr>
+                                            <td><?= $no++; ?></td>
+                                            <td><?= $user['kd_user']; ?></td>
+                                            <td><?= $user['nama_lengkap']; ?></td>
+                                            <td><?= $user['email']; ?></td>
+                                            <td><?= $user['no_hp']; ?></td>
+                                            <td><?= $user['profesi']; ?></td>
+                                            <td><?= $user['role']; ?></td>
+                                            <td class="button-action">
+                                                <button class="warning" onclick="location.href='./../edit_profile.php?kd_user=<?= $user['kd_user']; ?>'"><i class="ri-pencil-line"></i></button>
+                                                <button class="danger" onclick="location.href='delete_user.php?kd_user=<?= $user['kd_user']; ?>'"><i class="ri-delete-bin-line"></i></button>
+                                                <button><i class="ri-gallery-view-2"></i></button>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else : ?>
                                     <tr>
-                                        <td><?= $no++; ?></td>
-                                        <td><?= $user['kd_user']; ?></td>
-                                        <td><?= $user['nama_lengkap']; ?></td>
-                                        <td><?= $user['email']; ?></td>
-                                        <td><?= $user['no_hp']; ?></td>
-                                        <td><?= $user['profesi']; ?></td>
-                                        <td><?= $user['role']; ?></td>
-                                        <td class="button-action">
-                                            <button class="warning" onclick="location.href='./../edit_profile.php?kd_user=<?= $user['kd_user']; ?>'"><i class="ri-pencil-line"></i></button>
-                                            <button class="danger" onclick="location.href='delete_user.php?kd_user=<?= $user['kd_user']; ?>'"><i class="ri-delete-bin-line"></i></button>
-                                            <button><i class="ri-gallery-view-2"></i></button>
-                                        </td>
+                                        <td colspan="8">Tidak memiliki data</td>
                                     </tr>
-                                <?php endforeach; ?>
+                                <?php endif; ?>
                             </table>
                         </div>
                     </div>
@@ -182,6 +203,8 @@ $totalPages = ceil($total / $perPage);
     <!-- Main-app -->
 
     <script src="./../../dist/js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 </body>
 
 </html>

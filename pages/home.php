@@ -3,34 +3,37 @@ session_start();
 
 // Check the session
 if (!isset($_SESSION['login'])) {
-    header('Location: login.php');
+    header('location: login.php');
     exit;
 }
 
-require './../includes/function.php';
+include './../includes/function.php';
 
-$id = $_GET['kd_user'];
+// Get user data in session
+$email = $_SESSION['email'];
+$user = query("SELECT DISTINCT * FROM tb_users WHERE email = '$email'");
 
-// Query single user's
-$user = query("SELECT * FROM tb_users WHERE kd_user = '$id'");
-
-// Update user's data
-if (isset($_POST['submit'])) {
-    if (editUser($_POST) > 0) {
-        echo "
-        <script>
-            document.location.href = './profile.php';
-            alert('Pengguna berhasil diubah!');
-        </script>
-        ";
-    } else {
-        echo "
-        <script>
-            document.location.href = './profile.php';
-            alert('Pengguna gagal diubah!');
-        </script>
-        ";
-    }
+// Get assigments
+if ($user[0]['role'] == 'Admin') {
+    $assignments = query("SELECT DISTINCT *
+                        FROM tb_users 
+                        JOIN tb_tugas ON tb_users.kd_user = tb_tugas.kd_user 
+                        JOIN tb_pembayaran ON tb_tugas.kd_tugas = tb_pembayaran.kd_tugas 
+                        ORDER BY tb_tugas.created_at DESC LIMIT 4");
+} else if ($user[0]['role'] == 'Penjoki') {
+    $assignments = query("SELECT DISTINCT *
+                        FROM tb_users 
+                        JOIN tb_tugas ON tb_users.kd_user = tb_tugas.kd_user 
+                        JOIN tb_pembayaran ON tb_tugas.kd_tugas = tb_pembayaran.kd_tugas 
+                        WHERE tb_tugas.kd_penjoki IS NULL
+                        ORDER BY tb_tugas.created_at DESC LIMIT 4");
+} else {
+    $assignments = query("SELECT DISTINCT *
+                        FROM tb_users 
+                        JOIN tb_tugas ON tb_users.kd_user = tb_tugas.kd_user 
+                        JOIN tb_pembayaran ON tb_tugas.kd_tugas = tb_pembayaran.kd_tugas 
+                        WHERE email = '$email'
+                        ORDER BY tb_tugas.created_at DESC LIMIT 4");
 }
 
 ?>
@@ -48,7 +51,7 @@ if (isset($_POST['submit'])) {
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <title>Ubah Profile | Jokiin</title>
+    <title>Home | Jokiin</title>
 
 </head>
 
@@ -60,7 +63,7 @@ if (isset($_POST['submit'])) {
                 <div class="box">
                     <h2><a href="./home.php">Joki.In</a></h2>
                     <ul>
-                        <li><a href="./home.php">Beranda</a></li>
+                        <li><a href="#" class="active">Beranda</a></li>
                         <li><a href="./dashboard/dashboard.php">Dashboard</a></li>
                         <li><a href="./riwayat.php">Riwayat</a></li>
                     </ul>
@@ -83,8 +86,8 @@ if (isset($_POST['submit'])) {
                             </div>
                         </li>
                         <li>
-                            <a href="">
-                                <h3>John Nash</h3>
+                            <a href="./profile.php">
+                                <h3><?= $user[0]['nama_lengkap']; ?></h3>
                             </a>
                         </li>
                     </ul>
@@ -99,9 +102,9 @@ if (isset($_POST['submit'])) {
                         <polygon points="12,0 24,12 0,12" fill="#2a9d8f" />
                     </svg>
                     <ul>
-                        <li>
+                        <li class="active">
                             <i class="ri-home-5-line" onclick="location.href='./../home.php'"></i>
-                            <a href="./home.php">Beranda</a>
+                            <a href="#">Beranda</a>
                         </li>
                         <li>
                             <i class="ri-dashboard-line" onclick="location.href='dashboard.php'"></i>
@@ -127,58 +130,67 @@ if (isset($_POST['submit'])) {
     </section>
     <!-- Navigation End -->
 
-    <!-- Profile menu Start -->
-    <section class="edit-profile">
+    <!-- Hero Start -->
+    <section class="hero">
         <div class="container">
-            <!-- Where form begin -->
-            <form action="" method="POST">
-                <label for="image">
-                    <img src="./../img/user-1.jpg" />
-                    <input type="file" name="image" id="image" style="display:none;" />
-                    <h1><?= $user[0]['nama_lengkap']; ?></h1>
-                    <p><?= $user[0]['profesi']; ?></p>
-                </label>
-                <div class="box-edit-profile">
-                    <div class="box">
-                        <input type="hidden" name="kd_user" id="kd_user" value="<?= $user[0]['kd_user']; ?>">
-                        <div>
-                            <label for="nama">Nama Lengkap</label>
-                            <input type="text" name="nama" id="nama" placeholder="Masukkan nama lengkap" value="<?= $user[0]['nama_lengkap']; ?>">
-                        </div>
-                        <div>
-                            <label for="email" readonly>Email</label>
-                            <input type="text" name="email" id="email" placeholder="Masukkan email" value="<?= $user[0]['email']; ?>" readonly>
-                        </div>
-                        <div>
-                            <label for="phone_number" readonly>Nomor Handphone</label>
-                            <input type="text" name="phone_number" id="phone_number" placeholder="Masukkan nomor handphone" value="<?= $user[0]['no_hp']; ?>" readonly>
-                        </div>
-                        <div>
-                            <label for="profesi" value="<?= $user[0]['profesi']; ?>">Profesi</label>
-                            <select name="profesi" id="profesi">
-                                <option value="Penjoki">Mahasiswa</option>
-                                <option value="Penjoki">Pelajar</option>
-                                <option value="Penjoki">Lainnya</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="role" value="<?= $user[0]['role']; ?>">Sebagai</label>
-                            <select name="role" id="role" readonly>
-                                <option value="Penjoki">Pengguna</option>
-                                <option value="Penjoki">Penjoki</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="password">Password</label>
-                            <input type="password" name="password" id="password" placeholder="Masukkan password">
-                        </div>
-                        <button type="submit" class="button" name="submit">Submit</button>
-                    </div>
+            <div class="box-hero">
+                <div class="box">
+                    <h2>Selesaikan Tugas dan Laporan</h2>
+                    <p>Temukan tugas dan laporan dari berbagai pengguna. Pengelolaan Tugas dilakukan secara terpadu di dalam satu sistem.</p>
+                    <?php if ($user[0]['role'] == 'Admin' || $user[0]['role'] == 'Penjoki') : ?>
+                        <button class="button" onclick="location.href='./assigments.php'">Lihat Tugas Lainnya</button>
+                    <?php else : ?>
+                        <button class="button" onclick="location.href='./dashboard/add_assignment.php'">Upload Tugas Anda</button>
+                    <?php endif; ?>
                 </div>
-            </form>
+                <div class="box">
+                    <img src="./../img/main-ilustration.jpg" alt="main-il">
+                </div>
+            </div>
         </div>
     </section>
-    <!-- Profile-menu End -->
+    <!-- Hero End -->
+
+    <!-- Content Start -->
+    <section class="content">
+        <div class="container">
+            <h1>Tugas Terbaru</h1>
+            <p><?php echo empty(count($assignments)) ? "Belum ada tugas saat ini" : count($assignments) . " tugas terbaru telah ditambahkan hari ini!" ?></p>
+            <div class="box-content">
+                <?php if (!empty($assignments)) : ?>
+                    <?php foreach ($assignments as $assignment) : ?>
+                        <div class="project-item">
+                            <div class="box-project-item">
+                                <img src="./../img/user-2.jpg" alt="user-2">
+                            </div>
+                            <div class="box-project-item">
+                                <h2><?= $assignment['nama_lengkap']; ?></h2>
+                                <h3><?= $assignment['judul']; ?></h3>
+                                <p><?= $assignment['deskripsi']; ?></p>
+                                <div class="tag">
+                                    <?= $assignment['assignment_type']; ?>
+                                </div>
+                            </div>
+                            <div class="box-project-item">
+                                <p>Rp. <?= $assignment['total_bayar']; ?></p>
+                                <?php if ($user[0]['role'] == 'Penjoki') : ?>
+                                    <button class="button" onclick="location.href='./confirm_assignment.php?kd_tugas=<?= $assignment['kd_tugas']; ?>&kd_penjoki=<?= $user[0]['kd_user']; ?>'">Ambil Tugas</button>
+                                <?php else : ?>
+                                    <button class="button" onclick="location.href='./detail.php?kd_tugas=<?php echo $assignment['kd_tugas']; ?>'">Detail</button>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                    <button class="button">Lebih Banyak</button>
+                <?php else : ?>
+                    <div class="empty">
+                        <img src="./../img/empty-il.jpg" alt="empty">
+                        <p>Sepertinya belum ada tugas yang tersedia?</p>
+                    </div>
+                <?php endif; ?>
+            </div>
+    </section>
+    <!-- Content End -->
 
     <!-- Footer Start -->
     <footer>

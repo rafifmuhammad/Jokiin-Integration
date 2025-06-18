@@ -1,3 +1,18 @@
+<?php
+session_start();
+
+// Check the session
+if (!isset($_SESSION['login'])) {
+    header('Location: login.php');
+    exit;
+}
+
+include './../includes/function.php';
+
+$email = $_SESSION['email'];
+$user = query("SELECT DISTINCT * FROM tb_users WHERE email = '$email'");
+$kdUser = $user[0]['kd_user'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,8 +27,7 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <title>Pembayaran 2 | Jokiin</title>
-
+    <title>Profile | Jokiin</title>
 </head>
 
 <body>
@@ -26,7 +40,7 @@
                     <ul>
                         <li><a href="./home.php">Beranda</a></li>
                         <li><a href="./dashboard/dashboard.php">Dashboard</a></li>
-                        <li><a href="./riwayat.php">Riwayat</a></li>
+                        <li><a href="./riwayat.html">Riwayat</a></li>
                     </ul>
                 </div>
                 <div class="box">
@@ -48,7 +62,7 @@
                         </li>
                         <li>
                             <a href="">
-                                <h3>John Nash</h3>
+                                <h3><?= $user[0]['nama_lengkap']; ?></h3>
                             </a>
                         </li>
                     </ul>
@@ -73,64 +87,59 @@
                         </li>
                         <li>
                             <i class="ri-history-line"></i>
-                            <a href="./riwayat.php">Riwayat</a>
+                            <a href="./riwayat.html">Riwayat</a>
                         </li>
-                        <li>
+                        <li class="active">
                             <i class="ri-user-line"></i>
-                            <a href="./profile.php">Profile</a>
+                            <a href="./profile.html">Profile</a>
                         </li>
                         <li>
                             <i class="ri-logout-circle-line" onclick="location.href='./../logout.php'"></i>
-                            <a href="./../index.html">Keluar</a>
+                            <a href="./logout.php">Keluar</a>
                         </li>
                     </ul>
                 </div>
             </div>
             <!-- Mobile Navigation End -->
         </div>
+        </div>
     </section>
     <!-- Navigation End -->
 
-    <!-- Payment Form Start -->
-    <section class="payment-form">
+    <!-- Profile menu Start -->
+    <section class="profile-menu">
         <div class="container">
-            <div class="box-payment-form">
-                <div class="box">
-                    <form action="">
-                        <div>
-                            <label for="kode_pembayaran">Kode Pembayaran</label>
-                            <input type="text" name="kode_pembayaran" id="kode_pembayaran" value="payment_2313" disabled>
-                        </div>
-                        <div>
-                            <label for="total_bayar">Total Bayar</label>
-                            <input type="text" name="total_bayar" id="total_bayar" value="Rp. 200.000" disabled>
-                        </div>
-                        <div>
-                            <label for="rekening">Rekening</label>
-                            <input type="text" name="rekening" id="rekening" value="082166552332" disabled>
-                        </div>
-                        <div>
-                            <label for="jenis_rekening">Jenis Rekening</label>
-                            <input type="text" name="jenis_rekening" id="jenis_rekening" value="DANA" disabled>
-                        </div>
-                        <div>
-                            <label for="nama">Atas Nama</label>
-                            <input type="text" name="nama" id="nama" value="John Nash" disabled>
-                        </div>
-                        <div>
-                            <label for="bukti_pembayaran">Upload Bukti Pembayaran (JPG/PNG)</label>
-                            <input type="file" name="bukti_pembayaran" id="bukti_pembayaran">
-                        </div>
-                        <button class="button">Konfirmasi</button>
-                    </form>
+            <label for="image">
+                <img src="./../img/user-1.jpg" />
+                <h1><?= $user[0]['nama_lengkap'] ?></h1>
+                <p><?= $user[0]['profesi'] ?></p>
+            </label>
+            <div class="box-profile-menu">
+                <div class="box" onclick="location.href='./edit_profile.php?kd_user=<?= $user[0]['kd_user']; ?>'">
+                    <div>
+                        <i class="ri-user-line"></i>
+                        <p>Ubah Profile</p>
+                    </div>
+                    <i class="ri-arrow-right-wide-fill"></i>
                 </div>
-                <div class="box">
-                    <img src="./../img/payment-ilustration.jpg" alt="ilustration">
+                <div class="box" onclick="location.href='#'">
+                    <div>
+                        <i class="ri-information-line"></i>
+                        <p>Tentang</p>
+                    </div>
+                    <i class="ri-arrow-right-wide-fill"></i>
+                </div>
+                <div class="box" onclick="location.href='./logout.php'">
+                    <div>
+                        <i class="ri-logout-box-line"></i>
+                        <p>Keluar</p>
+                    </div>
+                    <i class="ri-arrow-right-wide-fill"></i>
                 </div>
             </div>
         </div>
     </section>
-    <!-- Payment Form End -->
+    <!-- Profile-menu End -->
 
     <!-- Footer Start -->
     <footer>
@@ -164,7 +173,11 @@
     <!-- Footer End -->
 
     <script src="./../dist/js/script.js"></script>
-
+    <script>
+        $("input[type='image']").click(function() {
+            $("input[id='my_file']").click();
+        });
+    </script>
 </body>
 
 </html>

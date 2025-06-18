@@ -29,7 +29,7 @@ function addAssignment($data)
     global $conn;
 
     $kdTugas = uniqid();
-    $kdUser = "user_1";
+    $kdUser = $data['kd_user'];
     $judul = htmlspecialchars($data['judul']);
     $deskripsi = htmlspecialchars($data['deskripsi']);
     $assignmentType = htmlspecialchars($data['jenis']);
@@ -38,7 +38,7 @@ function addAssignment($data)
 
     // Payment variables
     $kdPembayaran = uniqid();
-    $kdUser = 'user_2';
+    $kdUser = $data['kd_user'];
     $createdAt = date('Y-m-d');
     $totalBayar = 0;
     $jenisTugas = $data['jenis'];
@@ -50,6 +50,8 @@ function addAssignment($data)
     } else {
         exit;
     }
+
+    addMessage($data, "Tugas Berhasil Ditambahkan", "Tugas anda telah berhasil ditambahkan!");
 
     // Query for table tugas
     $query = "INSERT INTO tb_tugas
@@ -79,6 +81,63 @@ function deleteAssignment($id)
     return mysqli_affected_rows($conn);
 }
 
+function uploadAssignment($data)
+{
+    global $conn;
+
+    $kdTugas = htmlspecialchars($data['kd_tugas']);
+    $fileType = htmlspecialchars($data['file_type']); // e.g., 'proposal', 'pertemuan1', 'pertemuan2', 'pertemuan3', 'file_lengkap'
+
+    // Handle file upload
+    if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+        $fileTmpPath = $_FILES['file']['tmp_name'];
+        $fileName = uniqid() . '_' . basename($_FILES['file']['name']);
+        $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/jokiin/uploads/';
+        $fullPath = $uploadDir . $fileName;
+
+        // Check if upload directory exists, create it if it doesn't
+        if (!file_exists($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+
+        // Move uploaded file
+        if (move_uploaded_file($fileTmpPath, $fullPath)) {
+            // Determine which column to update based on file_type
+            $column = '';
+            switch ($fileType) {
+                case 'proposal':
+                    $column = 'file_proposal';
+                    break;
+                case 'pertemuan1':
+                    $column = 'file_pertemuan_1';
+                    break;
+                case 'pertemuan2':
+                    $column = 'file_pertemuan_2';
+                    break;
+                case 'pertemuan3':
+                    $column = 'file_pertemuan_3';
+                    break;
+                case 'file_lengkap':
+                    $column = 'laporan_lengkap';
+                    break;
+                default:
+                    return 0;
+            }
+
+            // Update the tb_tugas table with the full path
+            $query = "UPDATE tb_tugas SET $column = '$fullPath' WHERE kd_tugas = '$kdTugas'";
+            mysqli_query($conn, $query);
+
+            return mysqli_affected_rows($conn);
+        } else {
+            echo "Error moving file.";
+            return 0;
+        }
+    }
+
+    return 0;
+}
+
 function updateConsultant($data)
 {
     global $conn;
@@ -89,15 +148,22 @@ function updateConsultant($data)
     $createdAt = htmlspecialchars($data['created_at']);
     $kdPenjoki = htmlspecialchars($data['kd_penjoki']);
 
-    $query = "UPDATE tb_tugas SET
+    // Tugas
+    $query1 = "UPDATE tb_tugas SET
     judul = '$judul',
     deskripsi = '$deskripsi',
     created_at = '$createdAt',
     kd_penjoki = '$kdPenjoki'
     WHERE kd_tugas = '$kdTugas'";
 
-    mysqli_query($conn, $query);
-    echo mysqli_error($conn);
+    // Pembayaran
+    $query2 = "UPDATE tb_pembayaran SET kd_penjoki = '$kdPenjoki' WHERE kd_tugas = '$kdTugas'";
+
+    // Query tugas
+    mysqli_query($conn, $query1);
+
+    // Query pembayaran
+    mysqli_query($conn, $query2);
 
     return mysqli_affected_rows($conn);
 }
@@ -212,14 +278,14 @@ function addPayment($data)
 // Ex:
 // array("kdUser"=> $kdUser, "judul"=>$judul, ...);
 
-function addMessage($data)
+function addMessage($data, $title, $message)
 {
     global $conn;
 
     $kdPesan = uniqid();
-    $kdUser = "user_1";
-    $judulPesan = $data['judul'];
-    $isiPesan = $data['isi_pesan'];
+    $kdUser = $data['kd_user'];
+    $judulPesan = $title;
+    $isiPesan = $message;
     $createdAt = date('Y-m-d');
 
     $query = "INSERT INTO tb_pesan 
@@ -227,4 +293,47 @@ function addMessage($data)
     VALUES ('$kdPesan', '$kdUser', '$judulPesan', '$isiPesan', '$createdAt')";
 
     mysqli_query($conn, $query);
+}
+
+// Rate Joki Functions
+function addRate($data)
+{
+    global $conn;
+
+    $kdPenilaian = uniqid();
+    $kdPengguna = $data['kd_user'];
+    $kdPenjoki = $data['kd_penjoki'];
+    $rate = $data['nilai'];
+    $comment = $data['komentar'];
+    $createdAt = date('Y-m-d');
+
+    $query = "INSERT INTO tb_penilaian
+    (kd_penilaian, kd_pengguna, kd_penjoki, rating, komentar, dinilai_pada, created_at)
+    VALUES ('$kdPenilaian', '$kdPengguna', '$kdPenjoki', '$rate', '$comment', '$createdAt', '$createdAt')";
+
+    mysqli_query($conn, $query);
+}
+
+function editRate($data)
+{
+    global $conn;
+
+    $kdPengguna = $data['kd_pengguna'];
+    $kdPenjoki = $data['kd_penjoki'];
+    $rate = $data['nilai'];
+    $comment = $data['komentar'];
+    $dinilaiPada = date('Y-m-d');
+
+    $query = "UPDATE tb_penilaian, tb_users SET
+    rating = '$rate',
+    komentar = '$comment',
+    dinilai_pada = '$dinilaiPada'
+    WHERE tb_penilaian.kd_user = tb_users.kd_user AND 
+    tb_penilaian.kd_penjoki = tb_users.kd_user AND 
+    kd_penjoki = '$kdPenjoki' AND kd_pengguna = '$kdPengguna'
+    ";
+
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
 }

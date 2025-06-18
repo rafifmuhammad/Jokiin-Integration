@@ -35,6 +35,7 @@ if (isset($_POST['submit'])) {
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <title>Tambahkan Pengguna | Jokiin</title>
+
 </head>
 
 <body>
@@ -48,10 +49,12 @@ if (isset($_POST['submit'])) {
             <i class="ri-dashboard-line" onclick="location.href='dashboard.php'"></i>
             <a href="./dashboard.php">Dashboard</a>
         </div>
-        <div class="box">
-            <i class="ri-group-line" onclick="location.href='user_management.php'"></i>
-            <a href="./user_management.php">Manajemen Pengguna</a>
-        </div>
+        <?php if ($user[0]['role'] == 'Admin') : ?>
+            <div class="box">
+                <i class="ri-group-line" onclick="location.href='user_management.php'"></i>
+                <a href="./user_management.php">Manajemen Pengguna</a>
+            </div>
+        <?php endif; ?>
         <div class="box">
             <i class="ri-message-2-line" onclick="location.href='mail_management.php'"></i>
             <a href="./mail_management.php">Manajemen Pesan</a>
@@ -69,12 +72,12 @@ if (isset($_POST['submit'])) {
             <a href="./rating.php">Penilaian</a>
         </div>
         <div class="box">
-            <i class="ri-home-5-line" onclick="location.href='./../home.html'"></i>
-            <a href="./../home.html">Beranda</a>
+            <i class="ri-home-5-line" onclick="location.href='./../home.php'"></i>
+            <a href="./../home.php">Beranda</a>
         </div>
         <div class="box">
-            <i class="ri-logout-circle-line" onclick="location.href='./../../index.html'"></i>
-            <a href="./../../index.html">Keluar</a>
+            <i class="ri-logout-circle-line" onclick="location.href='./../logout.php'"></i>
+            <a href="./../logout.php">Keluar</a>
         </div>
     </section>
     <!-- Sidebar End -->
@@ -160,6 +163,8 @@ if (isset($_POST['submit'])) {
     <!-- Main-app -->
 
     <script src="./../../dist/js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 </body>
 
 </html>

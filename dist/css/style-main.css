@@ -551,6 +551,10 @@ tr:not(:last-child) td {
     font-size: 14px;
 }
 
+.status-table.finished {
+    background-color: #0ead69;
+}
+
 .table-button {
     color: white;
     background-color: #c1121f;
@@ -607,7 +611,6 @@ tr:not(:last-child) td {
 }
 
 .confirm-payment {
-    display: none;
     font-size: 14px;
     background-color: #023e8a;
     padding: 4px 12px;
@@ -715,6 +718,14 @@ tr:not(:last-child) td {
     font-size: 14px;
 }
 
+.upload-button {
+    border: none;
+    color: white;
+    background-color: #0ead69;
+    font-size: 14px;
+    cursor: pointer;
+}
+
 .payment-form {
     width: 100vw;
     height: 100vh;
@@ -754,6 +765,22 @@ tr:not(:last-child) td {
 
 .payment-form .box-payment-form .box:nth-child(2) img {
     width: 760px;
+}
+
+
+/* Additional Style */
+
+.empty {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.empty img {
+    width: fit-content;
+    height: 240px;
 }
 
 
@@ -1094,6 +1121,14 @@ tr:not(:last-child) td {
     .payment-form .box-payment-form .box:nth-child(2) img {
         display: none;
     }
+    .upload-button {
+        font-size: 10px;
+    }
+    /* Empty image */
+    .empty img {
+        width: fit-content;
+        height: 120px;
+    }
     /* Footer Mobile Style */
     .footer .box-footer .box:nth-child(1) h1 {
         font-size: 16px;
@@ -1172,6 +1207,13 @@ tr:not(:last-child) td {
     /* Button Mobile Small Style */
     .button {
         font-size: 8px;
+    }
+    /* Empty image */
+    .empty img {
+        width: 120px;
+    }
+    .upload-button {
+        font-size: 10px;
     }
     /* Footer Mobile Small Style */
     .footer p {
