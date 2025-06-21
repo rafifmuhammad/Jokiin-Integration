@@ -142,23 +142,28 @@ if (isset($_POST['submit'])) {
                             <label for="created_at">Tanggal Diajukan</label>
                             <input type="text" name="created_at" id="created_at" value="<?= $task[0]['created_at']; ?>" readonly>
                         </div>
-                        <div class="input-container">
-                            <label for="judul">Nama Penjoki</label>
-                            <select name="kd_penjoki" id="kd_penjoki">
-                                <!-- The value will be the ID of the consultant -->
-                                <?php if (!empty($user[0]['kd_penjoki'])) : ?>
-                                    <option value="<?= $user[0]['kd_penjoki']; ?>" selected><?= $user[0]['nama_lengkap']; ?></option>
-                                    <?php foreach ($consultants as $consultant) : ?>
-                                        <?php if ($consultant['kd_user'] === $user[0]['kd_penjoki']) continue ?>
-                                        <option value="<?= $consultant['kd_user']; ?>"><?= $consultant['nama_lengkap']; ?></option>
-                                    <?php endforeach; ?>
-                                <?php else : ?>
-                                    <?php foreach ($consultants as $consultant) : ?>
-                                        <option value="<?= $consultant['kd_user']; ?>"><?= $consultant['nama_lengkap']; ?></option>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </select>
-                        </div>
+                        <!-- Bro dibagian ini seharusnya buat logika isset kd_penjoki kosong kemarin rencananya buat fungsi update assignment -->
+                        <?php if ($user[0]['role'] == 'Penjoki' || $user[0]['role'] == 'Pengguna') : ?>
+                            <input type="hidden" name="kd_penjoki" id="kd_penjoki" value="<?= $user[0]['kd_penjoki']; ?>">
+                        <?php else : ?>
+                            <div class="input-container">
+                                <label for="judul">Nama Penjoki</label>
+                                <select name="kd_penjoki" id="kd_penjoki">
+                                    <!-- The value will be the ID of the consultant -->
+                                    <?php if (!empty($user[0]['kd_penjoki'])) : ?>
+                                        <option value="<?= $user[0]['kd_penjoki']; ?>" selected><?= $user[0]['nama_lengkap']; ?></option>
+                                        <?php foreach ($consultants as $consultant) : ?>
+                                            <?php if ($consultant['kd_user'] === $user[0]['kd_penjoki']) continue ?>
+                                            <option value="<?= $consultant['kd_user']; ?>"><?= $consultant['nama_lengkap']; ?></option>
+                                        <?php endforeach; ?>
+                                    <?php else : ?>
+                                        <?php foreach ($consultants as $consultant) : ?>
+                                            <option value="<?= $consultant['kd_user']; ?>"><?= $consultant['nama_lengkap']; ?></option>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </select>
+                            </div>
+                        <?php endif; ?>
                         <button type="submit" class="button" name="submit">Submit</button>
                     </form>
                 </div>
@@ -177,8 +182,8 @@ if (isset($_POST['submit'])) {
     <!-- Main-app -->
 
     <script src="./../../dist/js/script.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 </body>
 
 </html>
