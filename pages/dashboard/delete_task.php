@@ -1,6 +1,6 @@
 <?php
 
-include __DIR__ . './../../includes/function.php';
+include './../../includes/function.php';
 
 $kdTugas = $_GET['kd_tugas'];
 

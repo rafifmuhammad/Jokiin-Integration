@@ -7,7 +7,7 @@ if (!isset($_SESSION['login'])) {
     exit;
 }
 
-include __DIR__ . './../includes/function.php';
+include './../includes/function.php';
 
 $email = $_SESSION['email'];
 $user = query("SELECT DISTINCT * FROM tb_users WHERE email = '$email'");

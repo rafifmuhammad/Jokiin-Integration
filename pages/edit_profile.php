@@ -7,7 +7,7 @@ if (!isset($_SESSION['login'])) {
     exit;
 }
 
-require __DIR__ . './../includes/function.php';
+require './../includes/function.php';
 
 $id = $_GET['kd_user'];
 
