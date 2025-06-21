@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include './../includes/function.php';
+include __DIR__ . './../includes/function.php';
 
 if (isset($_POST['submit'])) {
     $_SESSION['email'] = $_POST['email'];

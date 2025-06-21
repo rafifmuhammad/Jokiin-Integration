@@ -8,7 +8,7 @@ if (!isset($_SESSION['login'])) {
 }
 
 
-include './../includes/function.php';
+include __DIR__ . './../includes/function.php';
 
 // Get user's session data
 $email = $_SESSION['email'];

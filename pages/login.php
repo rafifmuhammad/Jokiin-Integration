@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-include './../config/connect.php';
-include './../includes/function.php';
+include __DIR__ . './../config/connect.php';
+include __DIR__ . './../includes/function.php';
 
 if (isset($_POST['submit'])) {
     global $conn;

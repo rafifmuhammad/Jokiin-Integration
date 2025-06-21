@@ -1,5 +1,5 @@
 <?php
-include './../../includes/function.php';
+include __DIR__ . './../../includes/function.php';
 
 $id = $_GET['kd_tugas'];
 

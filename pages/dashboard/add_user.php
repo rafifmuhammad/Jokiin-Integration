@@ -1,5 +1,5 @@
 <?php
-include './../../includes/function.php';
+include __DIR__ . './../../includes/function.php';
 
 if (isset($_POST['submit'])) {
     if (addUser($_POST) > 0) {

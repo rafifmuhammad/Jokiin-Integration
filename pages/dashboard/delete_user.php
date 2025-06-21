@@ -1,5 +1,5 @@
 <?php
-require './../../includes/function.php';
+require __DIR__ . './../../includes/function.php';
 
 $kd_user = $_GET['kd_user'];
 
